@@ -25,6 +25,16 @@ public class CreateViewTest extends TestCase {
 		assertEquals(statement, createView.toString());
 	}
 
+    public void testCreateOrReplaceView() throws JSQLParserException {
+		String statement = "CREATE OR REPLACE VIEW myview AS SELECT * FROM mytab";
+		CreateView createView = (CreateView) parserManager.parse(new StringReader(statement));
+		assertTrue(createView.isOrReplace());
+		assertEquals("myview", createView.getView().getName());
+		assertEquals("mytab", ((Table)((PlainSelect)createView.getSelectBody()).getFromItem()).getName());
+		assertEquals(statement, createView.toString());
+	}
+
+
 	public static void main(String[] args) {
 		junit.swingui.TestRunner.run(CreateViewTest.class);
 	}

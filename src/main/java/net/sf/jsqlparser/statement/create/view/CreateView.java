@@ -58,7 +58,11 @@ public class CreateView implements Statement {
 	}
 
 	public String toString() {
-		String sql = "CREATE VIEW " + view + " AS " + selectBody;
+		String sql = "CREATE ";
+        if (isOrReplace()) {
+            sql += "OR REPLACE ";
+        }
+        sql += "VIEW " + view + " AS " + selectBody;
 		return sql;
 	}
 }
